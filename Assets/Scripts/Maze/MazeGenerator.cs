@@ -43,9 +43,6 @@ public class MazeGenerator : MonoBehaviour
     private int _backingUp;
     private int _wallToBreak;
     
-    // Keep track of time so if something happens we cancel it after the time limit.
-    private float creationtime;
-
     private void Start()
     {
         xSize = (int)widthSlider.value;
@@ -55,12 +52,7 @@ public class MazeGenerator : MonoBehaviour
         _startedBuilding = false;
         CreateGrid();
     }
-
-    private void FixedUpdate()
-    {
-        creationtime += Time.deltaTime;
-    }
-
+    
     void CreateGrid()
     {
         _wallFolder = new GameObject();
@@ -144,7 +136,6 @@ public class MazeGenerator : MonoBehaviour
 
     void CreateMaze()
     {
-        creationtime = 0;
         if (_visitedCells < _totalCells)
         {
             if (_startedBuilding)
@@ -174,8 +165,6 @@ public class MazeGenerator : MonoBehaviour
         }
 
         Invoke(nameof(CreateMaze), 0f);
-        
-        GetAndAssignNeighbours();
     }
 
     void BreakWall()
